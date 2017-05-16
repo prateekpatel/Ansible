@@ -1,0 +1,8 @@
+--- # git module example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+   - name: checking out a git repo in remote server 
+     git: repo=ssh://172.31.20.145/home/test/testrepo dest=/home/test/gitrepo 

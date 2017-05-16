@@ -1,0 +1,9 @@
+--- # copy yaml file
+- hosts: remote
+  user: test
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+   - name: copy from the ffiles directory text file
+     action: copy src=files/a dest=/home/test/a owner=test group=test mode=0655 backup=yes

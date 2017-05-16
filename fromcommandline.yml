@@ -1,0 +1,13 @@
+--- # variabke at the command line to pass
+- hosts: '{{ hosts }}'
+  user: '{{ user }}'
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: install some softaware
+     yum: pkg={{ pkg }} state=absent
+   - name: what are all the variable passed in
+   - debug:  
+       msg: "{{ hosts }} {{ user}}"
+    

@@ -1,0 +1,12 @@
+--- # error handling example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: execute a command that will fail
+     command: /bin/false
+     ignore_errors: yes
+   - name: install telnet
+     yum: pkg=lynx state=latest 

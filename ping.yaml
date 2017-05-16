@@ -1,0 +1,9 @@
+--- # ping example
+- hosts: all
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: ping task
+     ping:

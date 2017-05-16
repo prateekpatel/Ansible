@@ -1,0 +1,10 @@
+--- # shell model
+- hosts: remote
+  user: test
+  become: yes
+  tasks:
+   - name: shell module
+     shell: /bin/uptime >> uptime.log
+     args:
+       chdir: logs/
+       creates: uptime.log

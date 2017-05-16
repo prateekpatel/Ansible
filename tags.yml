@@ -1,0 +1,18 @@
+--- # tag functionality exaomple
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: Install the telnet and lynx
+     yum: pkg={{ item }} state=latest
+     with_items:
+        - telnet
+        - lynx
+     tags:
+        - packages
+   - name: verify that terlnet was install
+     raw: yum list installed | grep telnet > /home/test/pkg.log
+     tags:
+        - verfication

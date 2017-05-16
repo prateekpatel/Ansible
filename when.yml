@@ -1,0 +1,28 @@
+--- # this is the when playbook example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  vars:
+    playbook_type: coditionalexample
+  vars_files:
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+  tasks:
+    - name: Install apache Appropriately to the distribution type on (debian/ubuntu)
+      command: apt-get -y install apache2
+      when: ansible_os_family == "Debian"
+    - name: Install apache Appropriately to the distribution type (redhat/centos)
+      command: yum -y install httpd
+      when: ansible_os_family == "RedHat"
+
+
+
+#name: Install apache Appropriately to the distribution type on (debian/ubuntu)
+      #comamnd: apt-get -y install apache2
+      #when: ansible_os_family == "Debian"
+    # - name: Install apache Appropriately to the distribution type (redhat/centos)
+     #  command: yum -y install httpd
+      # when: ansible_os_family == "RedHat"
+    
+  

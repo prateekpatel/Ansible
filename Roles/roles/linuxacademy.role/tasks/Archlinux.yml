@@ -1,0 +1,21 @@
+- name: Install package
+  pacman:
+   name: "{{ item }}"
+   state: present
+  with_items:
+   - curl
+   - git
+   - htop
+   - tmux
+   - unzip
+   - screenfetch
+   - wget
+   - man
+   - strace
+   - vim
+   - tcpdump
+
+- name: Update all package
+  pacman:
+   update_cache: yes
+   upgrade: yes

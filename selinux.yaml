@@ -1,0 +1,9 @@
+--- # selinux playbook
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: selinux module
+     selinux: policy=targeted state=permissive

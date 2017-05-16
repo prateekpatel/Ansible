@@ -1,0 +1,23 @@
+- name: install apache web server
+  yum: pkg=httpd  state=latest
+  notify: Start HTTD
+- name: Add a list of software
+  yum: pkg={{ item }} state=latest
+  with_items:
+  - telnet
+  - lynx
+  tags: install_list
+- name: verify that the web-service is running 
+  command: systemctl status httpd
+  register: result
+  ignore_errors: yes
+- name: logged all the package installed on the system
+  command: yum list installed | grep telnet 
+  register: installed_result
+  tags: install_result
+- debug: var=result
+- debug: var=installed_result
+- debug: 
+   msg: Need to install telnet
+  when: "ansible_os_family == 'RedHat'"
+  notify: InstallTelnet

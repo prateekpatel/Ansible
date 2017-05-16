@@ -1,0 +1,7 @@
+--- 
+- hosts: remote
+  user: test
+  become: ssh
+  tasks:
+   - name: data into file
+     shell: echo "testting" > testfile

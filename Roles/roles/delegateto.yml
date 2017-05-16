@@ -1,0 +1,13 @@
+--- # master playbook for delegate  servres
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  #gather_facts: no
+  pre_tasks:
+    - name: ping the application server
+      raw: ping -c4 172.31.20.145 > /home/test/playbooks/Roles/roles/ping.out
+      delegate_to: 127.0.0.1    
+  roles:
+    #- remote
+  -  webservers

@@ -1,0 +1,8 @@
+--- # adding a user
+- hosts: remote
+  user: test
+  connection: ssh
+  become: yes
+  tasks:
+   - name: Add a user tstapache to the apache web client
+     user: name=tstapache state=absent remove=yes

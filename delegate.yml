@@ -1,0 +1,13 @@
+--- # delegate to function demo
+- hosts: remote
+  become: yes
+  user: test
+  gather_facts: yes
+  connection: ssh
+  tasks:
+   - name: RUn a remore ping in the app server
+     command: ping -c5 shaurya23096.mylabserver.com
+     delegate_to: 127.0.0.1
+   - name: install the package 
+     yum: pkg=lynx state=latest
+   

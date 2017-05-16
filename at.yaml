@@ -1,0 +1,11 @@
+--- # at yaml playbokk
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+   - name: installing at
+     yum: pkg=at state=latest
+   - name: this is at task
+     at: command="ls  /var/log > /home/test/at1.log" state=absent  unique=true

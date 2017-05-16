@@ -1,0 +1,37 @@
+--- # Build an Apache Web Server
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  vars:
+   apache_pkg: httpd
+   distribution: redhat
+   apache_version: 2.4
+   apache_dir: /var/www/sample
+   apache_fqdn: shaurya23096.mylabserver.com
+  tasks:
+    - name: Install the webserver package
+      yum: pkg=httpd state=latest
+    - name: Create the web-server directory
+      file: path=/var/www/sample state=directory mode=644
+    - name: Copy the apache configuration file to the remote host
+      copy: src=files/httpd.conf.template dest=/etc/httpd/conf/httpd.conf owner=root group=root mode=644
+      ignore_errors: true
+    - name: Create the VHOST.D Directory on the remote host 
+      file: path=/etc/httpd/vhost.d state=directory mode=755
+    - name: copy and untar the source for the site
+      unarchive: src=files/sitecode.tar.gz dest=/var/www/sample
+      ignore_errors: true
+    - name: Copy the default vhost configuration file 
+      copy: src=files/default.conf.template dest=/etc/httpd/vhost.d/default.conf owner=root group=root mode=644
+      ignore_errors: true
+    - name: start the web-server
+      service: name=httpd state=started
+    - name: test the web-server
+      shell: curl http://shaurya23096.mylabserver.com
+      register: result
+    - name: Display result
+      debug: var=result
+
+

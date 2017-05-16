@@ -1,0 +1,11 @@
+--- # acl module example 
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+   - name: get the  ACL information of  /etc/test.acl.txt remote file
+     acl: name=/etc/test.acl.txt entity=test etype=user  state=absent
+     register: aclinfo
+   - debug:
+       msg: '{{ aclinfo }}'

@@ -1,0 +1,9 @@
+--- # package module example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+   - name: installing the package irrespective of OS type
+     package: name=telnet state=absent

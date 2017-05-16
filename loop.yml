@@ -1,0 +1,13 @@
+--- # loop playbook example
+- hosts: remote
+  become: yes
+  user: test
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: add a list of user
+     user: name={{ item }} state=present
+     with_items:
+       - user1
+       - user2
+       - user3

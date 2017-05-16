@@ -1,0 +1,14 @@
+--- # master playbook for remote servres
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  #gather_facts: no
+  pre_tasks:
+    - name: how long role took to run
+      raw: date > /home/test/startofrole.log
+  roles:
+  - { role: redhat_webservers, when: "ansible_os_family == 'RedHat'" }
+  post_tasks:
+    - name: when did the role end
+      raw: date > /home/test/endofrole.log

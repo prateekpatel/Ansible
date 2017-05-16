@@ -1,0 +1,9 @@
+--- # ansible 2.0 package demo module
+- hosts: all
+  remote_user: test
+  become: yes
+  become_method: sudo
+  connection: ssh
+  tasks:
+   - name: package module for the package which are same on all distributionm
+     package: name=telnet   state=latest

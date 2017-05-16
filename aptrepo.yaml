@@ -1,0 +1,15 @@
+--- # apt_repository module example/Also apt-key example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+   - name: Install a dependency needed for  apt-repository 
+     apt: pkg=python-apt state=latest
+     when: ansible_os_family == "Debian"
+   - name: Add the repo key
+     apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+     when: ansible_os_family == "Debian"
+   - name: Add the google repo for ubuntu
+     apt_repository: repo='deb http://dl.google.com/linux/deb/ stable main non-free' state=present
+     when: ansible_os_family == "Debian"

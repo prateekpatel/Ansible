@@ -1,0 +1,11 @@
+--- # find exampple
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+   - name: Simple find fstab file
+     find: paths="/etc" patterns="fstab" recurse=yes
+     register: result
+   - debug: var=result

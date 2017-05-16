@@ -1,0 +1,14 @@
+--- # this is a playnook section
+- hosts: all
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: install apache server
+      yum: pkg=httpd state=latest
+      notify: 
+      - Restart httpd
+  handlers:
+      - name: Restart httpd
+        action: service name=httpd state=retarted

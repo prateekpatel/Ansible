@@ -1,0 +1,11 @@
+--- # command example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: command module
+      command: /home/test/testing/test.sh
+      args:
+        chdir: /home/test/testing

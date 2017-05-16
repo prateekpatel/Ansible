@@ -1,0 +1,9 @@
+--- # seboolean example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: seboolean example
+     seboolean: name=httpd_anon_write state=no  persistent=yes

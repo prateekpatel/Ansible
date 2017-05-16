@@ -1,0 +1,43 @@
+- name: Update all yum package
+  yum:
+   name: "*"
+   state: latest
+
+- name: Install epel-release
+  yum:
+   name: "epel-release"
+   state: latest
+
+- name: Install a base package with yum
+  yum:
+   name: "{{ item }}"
+   state: latest
+  with_items:
+     - vim
+     - man
+     - wget
+     - bind-utils
+     - curl
+     - git
+     - htop
+     - pv
+     - tmux
+     - libselinux-python
+     - dialog
+     - bash-completion
+     - zip
+
+- name: Disable SELinux
+  selinux: state=disabled
+  when: "ansible_virtualization_type != 'openvz' and ansible_virtualization_type != 'lxc'"
+
+- name: Install open-vm-tools for CentOS Distro
+  yum:
+    name: open-vm-tools
+    state: latest
+  when: ansible_virtualization_type == 'VMWare'
+
+- name: Customize vimrc RHEL Like
+  template:
+   src: vimrc_centos.j2
+   dest: /etc/vimrc

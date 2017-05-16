@@ -1,0 +1,9 @@
+--- #
+- hosts: remote
+  user: test
+  become: yes
+  tasks:
+   - name: debug module
+     raw: /bin/true
+   - debug:
+      msg: '{{set_fact.singlefact}}'

@@ -1,0 +1,12 @@
+--- # run once playbook
+- hosts: all
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: Run the uptime command on all host and logit
+     raw: /usr/bin/uptime >> /home/test/uptime.log
+   - name: list the var directory and logit
+     raw: ls -al /var >> /home/test/dir.list
+     run_once: true

@@ -1,0 +1,8 @@
+--- # group module example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+   - name: add a new group newgroup
+     group: name=newgroup state=absent

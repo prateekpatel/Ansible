@@ -1,0 +1,8 @@
+--- # geturl module
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+    - name: get url module
+      get_url: url=http://

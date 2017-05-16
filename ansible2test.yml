@@ -1,0 +1,10 @@
+--- # yum playbook
+- hosts: remote
+  remote_user: test
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: Install telnet
+     yum: name=telnet state=latest

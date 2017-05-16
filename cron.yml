@@ -1,0 +1,7 @@
+--- # cron yaml task
+- hosts: remote
+  user: test
+  connection: ssh
+  tasks:
+   - name: cron job
+     cron: name="list files" state=absent

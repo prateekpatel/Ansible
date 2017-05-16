@@ -1,0 +1,8 @@
+--- # raw task
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+   - name: raw task
+     raw: /bin/uptime > /home/test/a

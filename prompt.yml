@@ -1,0 +1,17 @@
+--- # prompt for user package
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  vars:
+    playbook_version: 0.01b
+  vars_prompt:
+    - name: pkgtoinstall
+      prompt: INstall which package?
+      default: telnet
+      private: no
+  tasks:
+    - name: install the indicated package
+      yum: pkg={{ pkgtoinstall }} state=latest
+      

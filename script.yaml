@@ -1,0 +1,8 @@
+--- # script module example
+- hosts: remote
+  user: test
+  become: sudo
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - script: /home/test/playbooks/system_uptime_script.sh creates=/home/test/uptime.log

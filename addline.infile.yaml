@@ -1,0 +1,15 @@
+---
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+    - name: create file if doesnot exist
+      file:
+        state: touch
+        path: /home/test/hostname.conf
+    - name: if line not there then add it
+      lineinfile:
+        state: present
+        dest: /home/test/hostname.conf
+        line: Hostname= {{ ansible_hostname }}

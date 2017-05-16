@@ -1,0 +1,9 @@
+--- # DNF module
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: installing apache web server using dns
+     dnf: name=httpd state=absent

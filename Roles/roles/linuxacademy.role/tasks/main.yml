@@ -1,0 +1,31 @@
+---
+# tasks file for common
+- name: Include {{ ansible_distribution }} File
+  include: "{{ ansible_distribution }}.yml"
+
+
+#- name: Add SSH Key
+#  authorized_key: 
+#     user: root 
+#     key: "{{ lookup('file', item) }}"
+#     state: present
+#  with_fileglob:
+#     - active_ssh_pub_keys/*.pub
+#  tags: ssh-key
+#
+#- name: Test /etc/aliases existe
+#  stat:
+#    path: /etc/aliases
+#  register: aliases_stat
+#
+#- name: Redirect root adresse
+#  lineinfile: 
+#     dest: /etc/aliases
+#     regexp: "^root:"
+#     line: 'root:	{{ email_addresses }}'
+#  register: add_aliases
+#  when: aliases_stat.stat.exists
+#
+#- name: Update alias database
+#  shell: newaliases
+#  when: add_aliases|changed

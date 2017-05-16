@@ -1,0 +1,10 @@
+--- # mysql_db module host
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  - tasks:
+     - name: Install the python MYSQL Support library 
+       yum: pkg=MySql-python state=latest
+     - name: Create a New Test DB called MyNewDb
+       mysql_db: name=MyNewDB state=dump target=/var/lib/mydbtestbkup.sql login_user=root login_password=password123

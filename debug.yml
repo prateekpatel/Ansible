@@ -1,0 +1,14 @@
+--- # debug yaml file
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+   - name: install the web-server
+     yum: pkg=httpd state=installed
+   - debug: 
+        msg: "Equivalent of sudo yum install httpd"
+   - name: How long the system has been up
+     shell: /usr/bin/uptime
+     register: result
+   - debug: var=result

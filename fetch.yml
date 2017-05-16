@@ -1,0 +1,8 @@
+--- # fetch yaml file
+- hosts: all
+  user: test
+  connection: ssh
+  become: yes
+  tasks:
+   - name: copy remote host file to control servre
+     fetch: src=/etc/hosts dest=/home/test/prefix-{{ ansible_hostname }} flat=yes

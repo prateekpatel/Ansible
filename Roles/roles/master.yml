@@ -1,0 +1,7 @@
+--- # i m here
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  roles:
+    - testrole

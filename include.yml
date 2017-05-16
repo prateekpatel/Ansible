@@ -1,0 +1,10 @@
+--- # full include task example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - include: /home/test/play/package.yml
+    - name: Verify the telnet package insstall
+      raw: yum list installed | grep telnet > /home/test/pkgs.log

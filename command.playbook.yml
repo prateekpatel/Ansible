@@ -1,0 +1,9 @@
+---
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: disable selinux
+     command: /sbin/setenforce 1

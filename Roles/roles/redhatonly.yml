@@ -1,0 +1,13 @@
+--- # master playbook for remote servres
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  pre_tasks:
+    - name: how long role took to run
+      raw: date > /home/test/startofrole.log
+  roles:
+    - redhat_webservers
+  post_tasks:
+    - name: when did the role end
+      raw: date > /home/test/endofrole.log

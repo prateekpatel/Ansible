@@ -1,0 +1,38 @@
+--- # configuration of database
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  vars:
+   dbserver_package: mariadb-server
+   dbclient_package: mariadb
+   dbserver_fqdn: shaurya23096.mylabserver.com
+   dbinstalldir: /var/lib
+   dbinstancename: MyDBTest
+   dbdistribution: Redhat
+   dbversion: 5.5.44
+  tasks:
+   - name: install the mariadb package 
+     yum: pkg=mariadb-server state=latest
+   - name: Install the mariadb-client utilities
+     yum: pkg=mariadb state=latest
+   - name: Start the database service
+     service: name=mariadb state=started
+   - pause: prompt="please run the Mysql_secure_installation binary and then press enter for the playbook to continue"
+   - name: restart the database service
+     service: name=mariadb state=restarted
+   - name: Copy the remote database in order to restore
+     copy: src=files/mysqlbkup.sql dest=/var/lib/mysqlbkup.sql owner=root group=root mode=755
+   - name: Create the remote database instance
+     shell: mysqladmin -u root -ppassword123 create MyDBTest
+   - name: Import the database backup to tthe live DB 
+     shell: mysql -u root -ppassword123 MyDBTest < /var/lib/mysqlbkup.sql
+     register: result
+   - debug: var=result
+   - name: Add a backup cron job to run everyday at midnight
+     cron: name="DB backup" minute=0 hour=0 job="mysqldump -u root -ppassword123 --databases MyDBTest > dbbackup.sql"
+   - name: Run a Quick sql command to be sure everything  was created and is working.
+     shell: mysql -u root -ppassword123 -e 'SHOW DATABASES;'
+     register: mysqlresult
+   - debug: var=mysqlresult

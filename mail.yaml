@@ -1,0 +1,13 @@
+--- # mail module example
+- hosts: remote
+  user: test
+  become: yes
+  connection: ssh
+  tasks:
+   - name: send an e-mail to test user indicating build completeion
+     mail:
+      host='localhost'
+      port=25
+      to="test"
+      subject="our host has finished deploying"
+      body='system called  {{ ansible_hostname }}  has been successfully set up'
