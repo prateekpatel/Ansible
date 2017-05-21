@@ -1,0 +1,11 @@
+---
+- hosts: remote
+  become: yes
+  tasks:
+   - name: install the package
+     yum: name={{ item }}
+     with_items:
+      - httpd
+      - lynx
+      - seige
+      - nmap

@@ -1,0 +1,17 @@
+---
+- hosts: remote
+  become: yes
+  vars:
+   decription: "{{ ansible_hostname }}"
+  tasks:
+   - name: install the httpd
+     yum: pkg=httpd state=latest
+   - name: write the index file
+     template: src=template.j2 dest=/var/www/html/index.html
+     notify:
+      - restart the httpd
+   - name: ensure that apache is running
+     service: name=httpd state=running
+  handlers: 
+     - name: restart the httpd
+       service: name=httpd state=restarted

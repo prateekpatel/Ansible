@@ -1,0 +1,20 @@
+---
+- hosts: remote
+  user: test
+  become: yes
+  tasks:
+   - name: command to run 
+     command: ls /etc/
+     register: result
+     tags:
+      - command
+   - debug:
+      msg: "{{ result.stdout }}"
+     tags:
+      - command
+   - name: install lynx
+     yum: pkg=lynx state=latest
+     register: status
+     tags:
+      - package
+   - debug: var=status
