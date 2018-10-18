@@ -1,0 +1,36 @@
+- name: playbook
+  hosts: '{{ host }}'
+  tasks:
+    - name: Warn logged in users of impending upgrade
+      win_msg:
+        display_seconds: 400
+        msg: Automated upgrade about to start.  Please save your work and log off before {{ deployment_start_time }}
+      when: ansible_os_family == "Windows"
+    - name: run netstat and return Ethernet stats 
+      win_command: netstat -e
+      register: netstat
+      when: ansible_os_family == "Windows"
+    - debug: var=netstat
+    - name: install elinks
+      #yum: pkg=elinks state=installed update_cache=true
+      yum: 
+        name: '{{ item }}'
+        state: present
+      with_items:
+      - elinks
+      - git
+      when: ansible_os_family == "RedHat"
+    #- debug: var=package
+    - name: installing git in windows
+      win_chocolatey:
+       name: git
+       state: present
+      when: ansible_os_family == "Windows"
+    - name: install jre
+      win_chocolatey:
+        name: jre8
+      when: ansible_os_family == "Windows"
+    - name: installing java on linux
+      yum: pkg=java state=installed update_cache=true
+      when: ansible_os_family == "RedHat"
+      

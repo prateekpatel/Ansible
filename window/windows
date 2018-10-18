@@ -1,0 +1,7 @@
+---
+# this is for window connectivity and has to be in /etc/ansible/group_vars/windows
+ansible_user: administrator
+ansible_password: interOP@16943
+ansible_port: 5986
+ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore

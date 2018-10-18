@@ -1,0 +1,30 @@
+- name: test cmd from win_command module
+  hosts: windows
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Warn logged in users of impending upgrade
+      win_msg:
+        display_seconds: 400
+        msg: Automated upgrade about to start.  Please save your work and log off before {{ deployment_start_time }}
+    - name: Create directory structure
+      win_file:
+        path: '{{ path }}'
+        state: directory
+    - name: Check to see if given java.exe  is installed
+      win_stat: path='{{ path }}{{package_name}}'
+      register: java_installed
+    - debug: 
+         var: java_installed
+         verbosity: 2
+    - name: Download file from FTP with authentication
+      win_get_url:
+         url: ftp://isl-neptune/software/Java/jdk1.6/jdk-6u29-windows-i586.exe
+         dest: 'C:\ca'
+         url_username: '{{ url_username }}'
+         url_password: '{{ url_password }}'
+      when: not java_installed.stat.exists
+    - name: install java custom software
+      raw: '{{ path }}{{package_name}}  /Quiet /NoRestart /Full'
+      when: not java_installed.stat.exists
+     

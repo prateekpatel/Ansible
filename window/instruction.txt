@@ -1,0 +1,4 @@
+ansible-playbook netstate.yml --extra-vars "host=windows deployment_start_time=`date`"
+ansible-playbook netstate.yml --extra-vars "host=windows deployment_start_time=`date`"
+ansible-playbook gitinstall2.yml --extra-vars "package=activation.jar  deployment_start_time=`date` ftp=ftp://ppmitc-ftp/ source_path_to_file=/Docker/env/apache-ant-1.8.4/ directory_name=lib/"
+python controller.py  -s abc -d lib

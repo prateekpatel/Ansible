@@ -1,0 +1,62 @@
+- name: test cmd from win_command module
+  hosts: windows
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Warn logged in users of impending upgrade
+      win_msg:
+        display_seconds: 400
+        msg: Automated upgrade about to start.  Please save your work and log off before {{ deployment_start_time }}
+    - name: Create directory structure if not there
+      win_file:
+        path: '{{ path }}'
+        state: directory
+    - name: Install nssm (non-sucking service manager) via chocolatey
+      win_chocolatey:
+       name: nssm
+    - name: Install git
+      win_chocolatey:
+       name: git
+       state: present
+       become: yes
+       become_user: Administrator
+       become_method: runas
+    - name: Install git from specified repository
+      win_chocolatey:
+        name: git
+        source: https://github.com/git/git.git
+    - name: install jre
+      win_chocolatey:
+        name: '{{ item }}'
+        state: present
+      with_items:
+      - jre8
+      - tomcat
+    - name: Check to see if given java.exe  is installed
+      win_stat: path='{{ path }}{{package}}'
+      register: installed
+    - name: Download file from FTP with authentication
+      win_get_url:
+         url: '{{ ftp }}{{source_path_to_file }}{{directory_name}}{{package}}'
+         dest: '{{ path }}'
+         url_username: '{{ url_username }}'
+         url_password: '{{ url_password }}'
+      when: not installed.stat.exists
+      register: result
+    - debug: var=result
+    #- name: Uninstall git
+    #  win_chocolatey:
+    #    name: git
+    #    state: absent
+   # - name: install custom software
+   #   raw: '{{ path }}{{ package }} /Quiet /NoRestart /Full'
+   #   when: not installed.stat.exists
+   # - name: install the .exe software
+   #   win_package:
+   #     path: '{{ path }}{{ package }}'
+   #     product_id: '{CF2BEA3C-26EA-32F8-AA9B-331F7E34BA97}'
+   #     arguments: /install /passive /norestart
+   #   tags:
+   #     - configurationexe
+    #- name: install the  .jar file
+      

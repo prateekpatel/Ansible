@@ -1,0 +1,10 @@
+#it has to be in the path /etc/ansible/host if u have defaut config
+[test]
+10.131.177.145
+[windows]
+patpr23-I16943
+[master]
+k8s-lod1976-23-master
+[slave]
+#k8s-lod1976-12-worker1
+k8s-lod1976-22-worker2

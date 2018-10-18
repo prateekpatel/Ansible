@@ -1,0 +1,5 @@
+---
+# This has to be in the path /etc/ansible/group_vars/slave -- slave name same as the hosts 
+ansible_connection: ssh
+ansible_ssh_user: root 
+ansible_ssh_pass: interOP@123

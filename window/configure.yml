@@ -1,0 +1,31 @@
+- name: test cmd from win_command module
+  hosts: '{{ host }}'
+  tasks:
+    - name: Warn logged in users of impending upgrade
+      win_msg:
+        display_seconds: 400
+        msg: Automated upgrade about to start.  Please save your work and log off before {{ deployment_start_time }}
+      when: ansible_os_family == "Windows"
+    - name: run netstat and return Ethernet stats 
+      win_command: netstat -e
+      register: netstat
+      when: ansible_os_family == "Windows"
+    - debug: var=netstat
+    - name: run the install module on linux
+      yum: pkg=elinks state=installed update_cache=true
+      register: package
+      when: ansible_os_family == "RedHat"
+    - debug: var=package
+    - name: installing java in windows
+      win_chocolatey:
+       name: git
+       state: present
+      when: ansible_os_family == "Windows"
+    - name: install jre
+      win_chocolatey:
+        name: jre8
+      when: ansible_os_family == "Windows"
+    - name: installing java on linux
+      yum: pkg=java state=installed update_cache=true
+      when: ansible_os_family == "RedHat"
+      
