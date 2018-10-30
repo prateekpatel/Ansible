@@ -3,7 +3,7 @@ import ftplib
 import os
 
 
-f = ftplib.FTP('ppmitc-ftp', 'xbuild', 'xbuild')
+f = ftplib.FTP('servername', 'username', 'password')
 
 
 def get_files(directory_name, dest_path='/root/playbook/output',
@@ -33,7 +33,7 @@ def get_files(directory_name, dest_path='/root/playbook/output',
                     f.retrbinary('RETR ' + filename, local_file.write)
                     print("%s file got copied" % filename)
                     #os.system('ansible-playbook gitinstall2.yml --extra-vars "package=jdk-6u29-windows-i586.exe  deployment_start_time=`date`"')
-                    os.system('ansible-playbook gitinstall2.yml --extra-vars "package=activation.jar  deployment_start_time=`date` ftp=ftp://ppmitc-ftp/ source_path_to_file=/Docker/env/apache-ant-1.8.4/ directory_name=lib/"')
+                    os.system('ansible-playbook gitinstall2.yml --extra-vars "package=activation.jar  deployment_start_time=`date` ftp=ftp://servername/ source_path_to_file=/Docker/env/apache-ant-1.8.4/ directory_name=lib/"')
                     exit(1)
             except ftplib.error_perm:
                 pass
